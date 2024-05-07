@@ -1,14 +1,30 @@
-meme_dict = {
-            "CRINGE": "Algo excepcionalmente raro o embarazoso",
-            "LOL": "Una respuesta común a algo gracioso",
-            "XD": "una respuesta muy comun a algo gracioso",
-            "LMAO": "una respuesta rara a algo gracioso", 
-            }
-            
-            
-word = input("Usando mayusculas escribe una palabra que no entiendas")
+import discord
+from discord.ext import commands
 
-if word in meme_dict.keys():
-    print(meme_dict[word])
-else:
-    print("esa palabra todavia no fue procesada, lo sentimos.")
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Hola, soy un bot {bot.user}!')
+
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+@bot.command()
+async def saludo(ctx):
+    await ctx.send("Bienvenidos")
+
+@bot.command()
+async def suma(ctx, num1:int,num2:int ):
+    resultado=num1+num2
+    await ctx.send(resultado)
+            
+bot.run()
